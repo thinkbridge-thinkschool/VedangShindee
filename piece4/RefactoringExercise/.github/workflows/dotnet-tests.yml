@@ -19,10 +19,10 @@ jobs:
         dotnet-version: '10.0.x'
     
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore piece4/RefactoringExercise
     
     - name: Build
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build --no-restore --configuration Release piece4/RefactoringExercise
     
     - name: Run Unit Tests
-      run: dotnet test tests/OrderApi.Tests/OrderApi.Tests.csproj --configuration Release --verbosity normal
+      run: dotnet test piece4/RefactoringExercise/tests/OrderApi.Tests/OrderApi.Tests.csproj --configuration Release --verbosity normal
