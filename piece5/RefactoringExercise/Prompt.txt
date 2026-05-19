@@ -1,0 +1,11 @@
+Write a deliberately-bad OrderController.cs for an ASP.NET Core minimal API (using [ApiController] on a class). 
+Ensure the file is approximately 300 lines long.
+It must contain one giant POST /api/orders action that mixes business logic, Entity Framework data access, complex validation, and HTTP shape inline.
+Include exactly four empty `catch { }` blocks swallowing exceptions.
+Include synchronous EF calls (like .ToList(), .FirstOrDefault(), .SaveChanges()) inside the async action.
+The action should return `object` instead of typed responses (like `ActionResult<T>` or `IResult`).
+Include zero tests in the generation.
+Include a couple of subtle bugs:
+- An off-by-one error when iterating over items.
+- A null reference dereference when a product is not found in the database.
+Save the file as-is and do not refactor it.
