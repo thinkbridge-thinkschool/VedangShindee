@@ -2922,31 +2922,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\aryan\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aryan\\Desktop\\thinkschool-AryanBhalerao\\Day1\\piece4\\RefactoringExercise\\tests\\OrderApi.Tests\\OrderApi.Tests.csproj",
+      "projectUniqueName": "D:\\Vedang\\thinkschool\\Day 1\\piece4\\RefactoringExercise\\tests\\OrderApi.Tests\\OrderApi.Tests.csproj",
       "projectName": "OrderApi.Tests",
-      "projectPath": "C:\\Users\\aryan\\Desktop\\thinkschool-AryanBhalerao\\Day1\\piece4\\RefactoringExercise\\tests\\OrderApi.Tests\\OrderApi.Tests.csproj",
-      "packagesPath": "C:\\Users\\aryan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aryan\\Desktop\\thinkschool-AryanBhalerao\\Day1\\piece4\\RefactoringExercise\\tests\\OrderApi.Tests\\obj\\",
+      "projectPath": "D:\\Vedang\\thinkschool\\Day 1\\piece4\\RefactoringExercise\\tests\\OrderApi.Tests\\OrderApi.Tests.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "D:\\Vedang\\thinkschool\\Day 1\\piece4\\RefactoringExercise\\tests\\OrderApi.Tests\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\aryan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2954,8 +2947,8 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\aryan\\Desktop\\thinkschool-AryanBhalerao\\Day1\\piece4\\RefactoringExercise\\src\\OrderApi\\OrderApi.csproj": {
-              "projectPath": "C:\\Users\\aryan\\Desktop\\thinkschool-AryanBhalerao\\Day1\\piece4\\RefactoringExercise\\src\\OrderApi\\OrderApi.csproj"
+            "D:\\Vedang\\thinkschool\\Day 1\\piece4\\RefactoringExercise\\src\\OrderApi\\OrderApi.csproj": {
+              "projectPath": "D:\\Vedang\\thinkschool\\Day 1\\piece4\\RefactoringExercise\\src\\OrderApi\\OrderApi.csproj"
             }
           }
         }
