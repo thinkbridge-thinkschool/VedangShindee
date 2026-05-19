@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Vedang\\thinkschool\\QuotesApi\\QuotesApi.csproj": {}
+    "D:\\Vedang\\thinkschool\\Day 1\\QuotesApi\\QuotesApi.csproj": {}
   },
   "projects": {
-    "D:\\Vedang\\thinkschool\\QuotesApi\\QuotesApi.csproj": {
+    "D:\\Vedang\\thinkschool\\Day 1\\QuotesApi\\QuotesApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Vedang\\thinkschool\\QuotesApi\\QuotesApi.csproj",
+        "projectUniqueName": "D:\\Vedang\\thinkschool\\Day 1\\QuotesApi\\QuotesApi.csproj",
         "projectName": "QuotesApi",
-        "projectPath": "D:\\Vedang\\thinkschool\\QuotesApi\\QuotesApi.csproj",
+        "projectPath": "D:\\Vedang\\thinkschool\\Day 1\\QuotesApi\\QuotesApi.csproj",
         "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\Vedang\\thinkschool\\QuotesApi\\obj\\",
+        "outputPath": "D:\\Vedang\\thinkschool\\Day 1\\QuotesApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
