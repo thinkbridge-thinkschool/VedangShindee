@@ -1,0 +1,7 @@
+# AI Reflection — Claude Code vs GitHub Copilot
+
+Claude helped me clean up the discount logic by moving the large if/else block into separate strategy classes. After the refactor, adding a new discount rule became much easier because I only need to create a new class instead of editing the main service. It also suggested using IHttpClientFactory instead of creating HttpClient objects directly, which is a better approach for handling API calls.
+While reviewing the changes, I noticed Claude had modified many unnecessary files like bin and obj folders along with generated build files. I caught this while reading the git diff carefully. I fixed it by adding a proper .gitignore file and only keeping the actual source code changes. If I had committed everything blindly, the repository would have become messy and harder to manage later.
+Copilot saved me a lot of time during testing. I only typed simple comments, and it generated most of the xUnit test methods automatically with Arrange, Act, and Assert sections. This removed a lot of repetitive work and helped me finish the tests much faster.
+One useful mistake from Copilot was a failing test for negative quantity validation. The failure showed that my service was actually accepting negative quantities, which was a real bug in my code. I fixed it by adding validation for quantities greater than zero.
+For late-night debugging, I would choose Claude first because it explains problems clearly and helps trace the root cause step by step.
