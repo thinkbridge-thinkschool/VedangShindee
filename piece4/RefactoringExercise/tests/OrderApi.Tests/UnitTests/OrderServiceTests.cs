@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -9,6 +7,7 @@ using Moq;
 using OrderApi.Data;
 using OrderApi.Models;
 using OrderApi.Services;
+using OrderApi.Services.Discounts;
 using Xunit;
 
 namespace OrderApi.Tests.UnitTests
@@ -23,14 +22,25 @@ namespace OrderApi.Tests.UnitTests
             return new OrderDbContext(options);
         }
 
-        private ILogger<OrderService> GetLogger()
+        private OrderService CreateService(OrderDbContext dbContext)
         {
-            return Mock.Of<ILogger<OrderService>>();
-        }
+            var strategies = new List<IDiscountStrategy>
+            {
+                new NullDiscountStrategy(),
+                new Save10Strategy(),
+                new Save20Strategy(),
+            };
 
-        private HttpClient GetHttpClient()
-        {
-            return new HttpClient(); // Mocking HttpClient handler is complex, for these tests we'll just test non-HTTP branches or accept it might fail HTTP calls gracefully.
+            var httpClientFactory = Mock.Of<System.Net.Http.IHttpClientFactory>();
+            var externalStrategy = new ExternalApiDiscountStrategy(
+                httpClientFactory,
+                Mock.Of<ILogger<ExternalApiDiscountStrategy>>());
+
+            return new OrderService(
+                dbContext,
+                Mock.Of<ILogger<OrderService>>(),
+                strategies,
+                externalStrategy);
         }
 
         [Fact]
@@ -38,7 +48,7 @@ namespace OrderApi.Tests.UnitTests
         {
             // Arrange
             var dbContext = GetDbContext();
-            var service = new OrderService(dbContext, GetLogger(), GetHttpClient());
+            var service = CreateService(dbContext);
             var request = new OrderRequest { CustomerName = "" };
 
             // Act
@@ -54,7 +64,7 @@ namespace OrderApi.Tests.UnitTests
         {
             // Arrange
             var dbContext = GetDbContext();
-            var service = new OrderService(dbContext, GetLogger(), GetHttpClient());
+            var service = CreateService(dbContext);
             var request = new OrderRequest
             {
                 CustomerName = "John Doe",
@@ -82,7 +92,7 @@ namespace OrderApi.Tests.UnitTests
             dbContext.Products.Add(new Product { Id = 1, Name = "Laptop", Price = 1000m, StockQuantity = 10 });
             await dbContext.SaveChangesAsync();
 
-            var service = new OrderService(dbContext, GetLogger(), GetHttpClient());
+            var service = CreateService(dbContext);
             var request = new OrderRequest
             {
                 CustomerName = "John Doe",
@@ -100,7 +110,7 @@ namespace OrderApi.Tests.UnitTests
             // Assert
             Assert.True(result.Success);
             Assert.NotNull(result.OrderId);
-            
+
             var savedOrder = await dbContext.Orders.Include(o => o.Items).FirstOrDefaultAsync(o => o.Id == result.OrderId);
             Assert.NotNull(savedOrder);
             Assert.Single(savedOrder.Items);

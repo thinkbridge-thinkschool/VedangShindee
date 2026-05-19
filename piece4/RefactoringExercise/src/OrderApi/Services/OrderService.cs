@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OrderApi.Data;
 using OrderApi.Models;
+using OrderApi.Services.Discounts;
 
 namespace OrderApi.Services
 {
@@ -20,13 +20,19 @@ namespace OrderApi.Services
     {
         private readonly OrderDbContext _dbContext;
         private readonly ILogger<OrderService> _logger;
-        private readonly HttpClient _httpClient;
+        private readonly IEnumerable<IDiscountStrategy> _discountStrategies;
+        private readonly ExternalApiDiscountStrategy _externalDiscountStrategy;
 
-        public OrderService(OrderDbContext dbContext, ILogger<OrderService> logger, HttpClient httpClient)
+        public OrderService(
+            OrderDbContext dbContext,
+            ILogger<OrderService> logger,
+            IEnumerable<IDiscountStrategy> discountStrategies,
+            ExternalApiDiscountStrategy externalDiscountStrategy)
         {
             _dbContext = dbContext;
             _logger = logger;
-            _httpClient = httpClient;
+            _discountStrategies = discountStrategies;
+            _externalDiscountStrategy = externalDiscountStrategy;
         }
 
         public async Task<OrderResponse> CreateOrderAsync(OrderRequest request, CancellationToken cancellationToken = default)
@@ -85,31 +91,15 @@ namespace OrderApi.Services
             }
 
             // Apply discount
-            if (!string.IsNullOrEmpty(request.DiscountCode))
+            var normalizedCode = request.DiscountCode ?? string.Empty;
+            var strategy = _discountStrategies.FirstOrDefault(s => s.Code == normalizedCode);
+            if (strategy == null && !string.IsNullOrEmpty(request.DiscountCode))
             {
-                if (request.DiscountCode == "SAVE10") totalAmount *= 0.9m;
-                else if (request.DiscountCode == "SAVE20") totalAmount *= 0.8m;
-                else
-                {
-                    try
-                    {
-                        // Fix sync-over-async and specific exception catching
-                        var response = await _httpClient.GetAsync($"https://api.discount-checker.com/validate?code={request.DiscountCode}", cancellationToken);
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var content = await response.Content.ReadAsStringAsync(cancellationToken);
-                            if (content.Contains("valid"))
-                            {
-                                totalAmount -= 5.0m;
-                            }
-                        }
-                    }
-                    catch (HttpRequestException ex)
-                    {
-                        _logger.LogWarning(ex, "Failed to validate discount code {Code}. Ignoring discount.", request.DiscountCode);
-                    }
-                }
+                _externalDiscountStrategy.Code = request.DiscountCode;
+                strategy = _externalDiscountStrategy;
             }
+            if (strategy != null)
+                totalAmount = await strategy.Apply(totalAmount, cancellationToken);
 
             // Tax
             decimal taxRate = 0.08m;
