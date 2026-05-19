@@ -1,0 +1,12 @@
+# Remove the .editorconfig to prevent issues
+root = true
+
+# Force no duplicate generation
+[*.cs]
+# Doesn't help, just informational
+
+# The issue is the build system is generating assembly attributes twice
+# We need to suppress GenerateAssemblyInfo or manually disable it
+
+[obj/**/*.cs]
+# These are generated files, ignore them for now
