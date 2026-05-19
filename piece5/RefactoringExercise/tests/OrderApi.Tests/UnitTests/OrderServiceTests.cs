@@ -116,5 +116,83 @@ namespace OrderApi.Tests.UnitTests
             Assert.Single(savedOrder.Items);
             Assert.Equal(1080m, savedOrder.TotalAmount); // 1000 + 8% tax
         }
+        // Test : validation rejects orders with negative quantity
+        [Fact]
+        public async Task CreateOrderAsync_NegativeQuantity_ReturnsFailure()
+        {
+            // Arrange
+            var dbContext = GetDbContext();
+            dbContext.Products.Add(new Product { Id = 1, Name = "Laptop", Price = 1000m, StockQuantity = 10 });
+            await dbContext.SaveChangesAsync();
+
+            var service = CreateService(dbContext);
+            var request = new OrderRequest
+            {
+                CustomerName = "John Doe",
+                CustomerEmail = "john@example.com",
+                CreditCardNumber = "1234567812345678",
+                Items = new List<OrderItemRequest>
+                {
+                    new OrderItemRequest { ProductId = 1, Quantity = -1 }
+                }
+            };
+
+            // Act
+            var result = await service.CreateOrderAsync(request);
+
+            // Assert
+            Assert.False(result.Success);
+            Assert.Contains("Invalid quantity", result.Message);
+        }
+        // Test: validation rejects orders with zero quantity
+        [Fact]
+        public async Task CreateOrderAsync_ZeroQuantity_ReturnsFailure()
+        {
+            // Arrange
+            var dbContext = GetDbContext();
+            dbContext.Products.Add(new Product { Id = 1, Name = "Laptop", Price = 1000m, StockQuantity = 10 });
+            await dbContext.SaveChangesAsync();
+
+            var service = CreateService(dbContext);
+            var request = new OrderRequest
+            {
+                CustomerName = "John Doe",
+                CustomerEmail = "john@example.com",
+                CreditCardNumber = "1234567812345678",
+                Items = new List<OrderItemRequest>
+                {
+                    new OrderItemRequest { ProductId = 1, Quantity = 0 }
+                }
+            };
+
+            // Act
+            var result = await service.CreateOrderAsync(request);
+
+            // Assert
+            Assert.False(result.Success);
+            Assert.Contains("Invalid quantity", result.Message);
+        }
+        // Test: validation rejects orders when items list is empty
+        [Fact]
+        public async Task CreateOrderAsync_EmptyItems_ReturnsFailure()
+        {
+            // Arrange
+            var dbContext = GetDbContext();
+            var service = CreateService(dbContext);
+            var request = new OrderRequest
+            {
+                CustomerName = "John Doe",
+                CustomerEmail = "john@example.com",
+                CreditCardNumber = "1234567812345678",
+                Items = new List<OrderItemRequest>()
+            };
+
+            // Act
+            var result = await service.CreateOrderAsync(request);
+
+            // Assert
+            Assert.False(result.Success);
+            Assert.Contains("No items in order", result.Message);
+        }
     }
 }

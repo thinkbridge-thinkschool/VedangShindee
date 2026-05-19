@@ -50,6 +50,12 @@ namespace OrderApi.Services
                 return new OrderResponse { Success = false, Message = "No items in order." };
             }
 
+            // Validate each item has a positive quantity
+            if (request.Items.Any(i => i.Quantity <= 0))
+            {
+                return new OrderResponse { Success = false, Message = "Invalid quantity: each item quantity must be greater than zero." };
+            }
+
             // Async EF Call
             var pendingOrdersCount = await _dbContext.Orders
                 .CountAsync(o => o.CustomerEmail == request.CustomerEmail && o.Status == "Pending", cancellationToken);
