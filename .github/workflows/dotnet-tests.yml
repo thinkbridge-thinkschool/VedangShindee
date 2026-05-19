@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: piece4/RefactoringExercise
 
     steps:
     - uses: actions/checkout@v4
@@ -20,12 +23,9 @@ jobs:
     
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: ./src
     
     - name: Build
       run: dotnet build --no-restore --configuration Release
-      working-directory: ./src
     
     - name: Run Unit Tests
-      run: dotnet test --no-build --configuration Release --verbosity normal
-      working-directory: ./tests
+      run: dotnet test tests/OrderApi.Tests/OrderApi.Tests.csproj --configuration Release --verbosity normal
