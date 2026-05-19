@@ -1,29 +1,31 @@
-name: .NET CI
+name: .NET Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master, develop ]
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
+    - uses: actions/checkout@v4
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-
+        dotnet-version: '10.0.x'
+    
     - name: Restore dependencies
       run: dotnet restore
-
-    - name: Build project
-      run: dotnet build --no-restore
-
-    - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      working-directory: ./src
+    
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+      working-directory: ./src
+    
+    - name: Run Unit Tests
+      run: dotnet test --no-build --configuration Release --verbosity normal
+      working-directory: ./tests
