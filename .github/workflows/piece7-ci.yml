@@ -46,12 +46,10 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Restore dependencies
-        working-directory: Day3/piece7
-        run: dotnet restore
+        run: dotnet restore Day3/piece7/Quotes.Tests.Integration
 
       - name: Build
-        working-directory: Day3/piece7
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build Day3/piece7/Quotes.Tests.Integration --no-restore --configuration Release
 
       - name: Run integration tests
         working-directory: Day3/piece7
