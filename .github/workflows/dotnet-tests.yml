@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: piece4/RefactoringExercise
+        working-directory: Day1/piece4/RefactoringExercise
+
 
     steps:
     - uses: actions/checkout@v4
