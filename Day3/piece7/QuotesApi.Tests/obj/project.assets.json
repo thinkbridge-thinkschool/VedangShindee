@@ -1894,11 +1894,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi.Tests\\QuotesApi.Tests.csproj",
+      "projectUniqueName": "d:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi.Tests\\QuotesApi.Tests.csproj",
       "projectName": "QuotesApi.Tests",
-      "projectPath": "D:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi.Tests\\QuotesApi.Tests.csproj",
+      "projectPath": "d:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi.Tests\\QuotesApi.Tests.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi.Tests\\obj\\",
+      "outputPath": "d:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1914,8 +1914,8 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "D:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi\\QuotesApi.csproj": {
-              "projectPath": "D:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi\\QuotesApi.csproj"
+            "d:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi\\QuotesApi.csproj": {
+              "projectPath": "d:\\Vedang\\thinkschool\\VedangShindee\\Day3\\piece7\\QuotesApi\\QuotesApi.csproj"
             }
           }
         }
