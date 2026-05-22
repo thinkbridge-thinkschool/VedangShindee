@@ -3,8 +3,14 @@ name: .NET Tests
 on:
   push:
     branches: [ main, master, develop ]
+    paths:
+      - 'Day1/piece4/**'
+      - '.github/workflows/dotnet-tests.yml'
   pull_request:
     branches: [ main, master, develop ]
+    paths:
+      - 'Day1/piece4/**'
+      - '.github/workflows/dotnet-tests.yml'
 
 jobs:
   test:
