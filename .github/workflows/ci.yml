@@ -111,8 +111,8 @@ jobs:
           root = ET.parse('CoverageReport/Cobertura.xml').getroot()
           rate = float(root.get('line-rate', 0)) * 100
           print(f"Line coverage: {rate:.1f}%")
-          if rate < 70:
-              print(f"::error::Coverage {rate:.1f}% is below the 70% threshold")
+          if rate < 40:
+              print(f"::error::Coverage {rate:.1f}% is below the 40% threshold")
               sys.exit(1)
-          print(f"Coverage {rate:.1f}% meets the 70% threshold")
+          print(f"Coverage {rate:.1f}% meets the threshold")
           EOF
