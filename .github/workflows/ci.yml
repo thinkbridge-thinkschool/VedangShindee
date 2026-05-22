@@ -58,7 +58,8 @@ jobs:
             --no-build \
             --logger "trx;LogFileName=test-results.trx" \
             --collect:"XPlat Code Coverage" \
-            --results-directory TestResults/unit
+            --results-directory TestResults/unit \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[*]*.Migrations.*,[*]Program"
 
       - name: Test – legacy integration (InMemory/SQLite)
         run: |
@@ -66,7 +67,8 @@ jobs:
             --no-build \
             --logger "trx;LogFileName=test-results.trx" \
             --collect:"XPlat Code Coverage" \
-            --results-directory TestResults/legacy
+            --results-directory TestResults/legacy \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[*]*.Migrations.*,[*]Program"
 
       - name: Test – integration (Testcontainers + SQL Server)
         run: |
@@ -74,7 +76,8 @@ jobs:
             --no-build \
             --logger "trx;LogFileName=test-results.trx" \
             --collect:"XPlat Code Coverage" \
-            --results-directory TestResults/integration
+            --results-directory TestResults/integration \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[*]*.Migrations.*,[*]Program"
 
       - name: Upload test results
         if: always()
