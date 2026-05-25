@@ -1,0 +1,10 @@
+﻿Albert Einstein	2	Try not to become a man of success, but rather try to become a man of value.	2024-07-30 00:00:00.0000000
+Emily Dickinson	2	If I can stop one heart from breaking, I shall not live in vain.	2024-10-21 00:00:00.0000000
+Ernest Hemingway	2	The world breaks everyone, and afterward, some are strong at the broken places.	2024-09-05 00:00:00.0000000
+Franz Kafka	1	A book must be the axe for the frozen sea within us.	2024-06-08 00:00:00.0000000
+Friedrich Nietzsche	3	Without music, life would be a mistake.	2024-11-08 00:00:00.0000000
+George Orwell	4	Who controls the past controls the future. Who controls the present controls the past.	2024-11-22 00:00:00.0000000
+Jane Austen	2	The person, be it gentleman or lady, who has not pleasure in a good novel, must be intolerably stupid.	2024-09-17 00:00:00.0000000
+Leo Tolstoy	3	The two most powerful warriors are patience and time.	2024-12-12 00:00:00.0000000
+Mark Twain	3	The two most important days in your life are the day you are born and the day you find out why.	2024-09-10 00:00:00.0000000
+Maya Angelou	2	You will face many defeats in life, but never let yourself be defeated.	2024-08-22 00:00:00.0000000
