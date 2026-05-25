@@ -1,0 +1,11 @@
+AuthorName	QuoteText	CreatedAt	RunningCount	DaysSincePrevious
+Albert Einstein	Imagination is more important than knowledge.	2024-02-14 00:00:00.0000000	1	NULL
+Albert Einstein	Try not to become a man of success, but rather try to become a man of value.	2024-07-30 00:00:00.0000000	2	167
+Emily Dickinson	Hope is the thing with feathers that perches in the soul.	2024-05-14 00:00:00.0000000	1	NULL
+Emily Dickinson	If I can stop one heart from breaking, I shall not live in vain.	2024-10-21 00:00:00.0000000	2	160
+Ernest Hemingway	There is nothing to writing. All you do is sit down at a typewriter and bleed.	2024-02-26 00:00:00.0000000	1	NULL
+Ernest Hemingway	The world breaks everyone, and afterward, some are strong at the broken places.	2024-09-05 00:00:00.0000000	2	192
+Franz Kafka	A book must be the axe for the frozen sea within us.	2024-06-08 00:00:00.0000000	1	NULL
+Friedrich Nietzsche	That which does not kill us makes us stronger.	2024-03-11 00:00:00.0000000	1	NULL
+Friedrich Nietzsche	He who has a why to live can bear almost any how.	2024-06-25 00:00:00.0000000	2	106
+Friedrich Nietzsche	Without music, life would be a mistake.	2024-11-08 00:00:00.0000000	3	136
