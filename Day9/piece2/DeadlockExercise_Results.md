@@ -115,7 +115,11 @@ EXEC xp_readerrorlog 0, 1, N'deadlock';
 
 **Result:**
 
-![Deadlock Graph](05_deadlock_graph.png)
+![Deadlock Graph ERRORLOG](05_deadlock_graph.png)
+
+**Visual Deadlock Graph:**
+
+![Deadlock Graph Visual](deadlock_graph.png)
 
 > ERRORLOG shows `deadlock victim=process1f640670478` with both keylocks confirming the circular wait.
 
