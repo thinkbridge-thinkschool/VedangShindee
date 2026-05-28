@@ -2,7 +2,7 @@
 
 ## Full Program Output
 
-![Program Output](Output.png)
+![Program Output](ChangeTrackerDemo/Output.png)
 
 **DEMO 1 – Identity Resolution**
 
