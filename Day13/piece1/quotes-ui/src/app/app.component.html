@@ -1,0 +1,64 @@
+<!-- full-width banner header -->
+<header class="app-header">
+  <h1>Quotes Explorer</h1>
+
+  <!-- search box with clear button -->
+  <div class="search-wrapper">
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Search by author…"
+      [value]="searchTerm()"
+      (input)="onSearch($event)"
+    />
+    @if (hasSearch()) {
+      <button class="clear-btn" (click)="clearSearch()" title="Clear search">✕</button>
+    }
+  </div>
+
+  <p class="summary">{{ summary() }}</p>
+</header>
+
+<!-- inline loading bar -->
+@if (isLoading()) {
+  <div class="loading-bar">Loading…</div>
+}
+
+<div class="app-body">
+
+  <!-- @switch drives main content state -->
+  @switch (true) {
+    @case (isLoading()) {
+      <div class="state-msg state-loading">Fetching quotes, please wait…</div>
+    }
+    @case (errorMessage() !== null) {
+      <div class="state-msg state-error">{{ errorMessage() }}</div>
+    }
+    @default {
+      <ul class="quote-list" [class.fading]="transitioning()">
+        @for (quote of paginatedQuotes(); track quote.id) {
+          <li class="quote-card">
+            <span class="quote-author">{{ quote.author }}</span>
+            <p class="quote-text">"{{ quote.text }}"</p>
+          </li>
+        } @empty {
+          <li class="state-msg state-empty">No quotes match your search.</li>
+        }
+      </ul>
+    }
+  }
+
+  <!-- pagination -->
+  <nav class="pagination">
+    <button class="btn-nav" (click)="goToPage(-1)" [disabled]="currentPage() === 1"
+      title="Previous page (← arrow key)">
+      ← Prev
+    </button>
+    <span class="page-label">Page {{ currentPage() }} of {{ totalPages() }}</span>
+    <button class="btn-nav" (click)="goToPage(1)" [disabled]="currentPage() === totalPages()"
+      title="Next page (→ arrow key)">
+      Next →
+    </button>
+  </nav>
+
+</div>

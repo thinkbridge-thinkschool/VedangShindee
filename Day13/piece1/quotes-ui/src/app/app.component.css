@@ -1,0 +1,188 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0f0f0f;
+  color: #f1f5f9;
+  font-family: system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+/* ── full-width banner header ─────────────────────────────────────────────── */
+.app-header {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+  border-bottom: 1px solid #4338ca;
+  padding: 2rem 1rem 1.5rem;
+  text-align: center;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #e0e7ff;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 0.75rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.7rem 2.5rem 0.7rem 1.1rem;
+  border: 1px solid #4338ca;
+  border-radius: 999px;
+  background: #1e1e2e;
+  color: #f1f5f9;
+  font-size: 1rem;
+  outline: none;
+}
+.search-input::placeholder { color: #6b7280; }
+.search-input:focus { border-color: #818cf8; box-shadow: 0 0 0 3px rgba(129,140,248,0.2); }
+
+.clear-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 50%;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+.clear-btn:hover { color: #f1f5f9; background: rgba(255,255,255,0.1); }
+
+.keyboard-hint {
+  font-size: 0.75rem;
+  color: #6366f1;
+  margin-top: 0.25rem;
+  opacity: 0.8;
+}
+
+.summary {
+  font-size: 0.85rem;
+  color: #a5b4fc;
+}
+
+/* ── page body ───────────────────────────────────────────────────────────── */
+.app-body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}
+
+/* ── loading bar ─────────────────────────────────────────────────────────── */
+.loading-bar {
+  background: #1e3a5f;
+  color: #93c5fd;
+  text-align: center;
+  padding: 0.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+/* ── state messages ──────────────────────────────────────────────────────── */
+.state-msg {
+  padding: 2.5rem;
+  text-align: center;
+  border-radius: 12px;
+  margin: 1rem 0;
+  font-size: 1rem;
+}
+.state-loading { background: #1e2d40; color: #93c5fd; }
+.state-error   { background: #2d1b1b; color: #fca5a5; border: 1px solid #7f1d1d; }
+.state-empty   { background: #1a1a1a; color: #6b7280; }
+
+/* ── quote cards ─────────────────────────────────────────────────────────── */
+.quote-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* fade-out phase — triggered when transitioning() is true */
+.quote-list.fading {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* fade-in: each card slides up when it enters */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.quote-card {
+  animation: cardIn 0.3s ease both;
+}
+
+.quote-card {
+  background: #1e1e1e;
+  border: 1px solid #2d2d2d;
+  border-left: 4px solid #6366f1;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.quote-card:hover {
+  border-left-color: #818cf8;
+  transform: translateX(3px);
+}
+
+.quote-author {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #818cf8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6rem;
+}
+
+.quote-text {
+  color: #cbd5e1;
+  font-style: normal;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* ── pagination ──────────────────────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn-nav {
+  padding: 0.5rem 1.4rem;
+  border: 1px solid #4338ca;
+  border-radius: 8px;
+  background: #1e1b4b;
+  color: #c7d2fe;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.15s;
+}
+.btn-nav:not(:disabled):hover { background: #312e81; }
+.btn-nav:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.page-label {
+  font-weight: 600;
+  color: #a5b4fc;
+  min-width: 6rem;
+  text-align: center;
+}

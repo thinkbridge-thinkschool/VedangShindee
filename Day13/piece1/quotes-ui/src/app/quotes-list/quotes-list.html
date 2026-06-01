@@ -1,0 +1,54 @@
+<div class="container">
+  <h1>Quotes Explorer</h1>
+
+  <!-- @switch labels the active page-size badge with a distinct style per size -->
+  <div class="controls">
+    <span class="label">Page size:</span>
+    @switch (pageSize()) {
+      @case (5)  { <span class="badge badge--sm">5 per page</span> }
+      @case (10) { <span class="badge badge--md">10 per page</span> }
+      @case (20) { <span class="badge badge--lg">20 per page</span> }
+      @default   { <span class="badge">{{ pageSize() }} per page</span> }
+    }
+    <div class="page-size-buttons">
+      @for (size of pageSizes; track size) {
+        <button
+          class="btn-size"
+          [class.active]="pageSize() === size"
+          (click)="changePageSize(size)">
+          {{ size }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="state loading">Loading quotes…</div>
+  } @else if (error()) {
+    <div class="state error">Error: {{ error() }}</div>
+  } @else if (!hasQuotes()) {
+    <div class="state empty">No quotes found.</div>
+  } @else {
+    <!-- summary is a computed() derived from currentPage + pageSize + quotes signals -->
+    <p class="summary">{{ summary() }}</p>
+
+    <ul class="quote-list">
+      @for (quote of quotes(); track quote.id) {
+        <li class="quote-card">
+          <blockquote class="quote-text">"{{ quote.text }}"</blockquote>
+          <cite class="quote-author">— {{ quote.author }}</cite>
+        </li>
+      }
+    </ul>
+
+    <div class="pagination">
+      <button class="btn-nav" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">
+        ← Prev
+      </button>
+      <span class="page-info">Page {{ currentPage() }}</span>
+      <button class="btn-nav" (click)="goToPage(currentPage() + 1)" [disabled]="!hasMore()">
+        Next →
+      </button>
+    </div>
+  }
+</div>
