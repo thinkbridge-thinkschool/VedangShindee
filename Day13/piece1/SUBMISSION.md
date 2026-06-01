@@ -8,10 +8,12 @@
 
 ## Screenshots
 
+![Output](Output.png)
+
 ### Output — quotes loaded from real API (2-column grid)
 ![Output Screenshot](Output%20Screenshot.png)
 
-![Output](Output%20Screenshot.png)
+
 
 ### Search — filtering by author name across all quotes
 ![Search Screenshot](Search%20Screenshot.png)
