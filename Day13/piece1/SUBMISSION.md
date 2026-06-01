@@ -5,6 +5,18 @@
 > - UI (Angular dev server) → dynamic; Angular picks the next free port each run.
 >   Currently running at `http://localhost:55269`. Check the terminal for the actual URL.
 
+
+## Screenshots
+
+### Output — quotes loaded from real API (2-column grid)
+![Output Screenshot](Output%20Screenshot.png)
+
+![Output](Output%20Screenshot.png)
+
+### Search — filtering by author name across all quotes
+![Search Screenshot](Search%20Screenshot.png)
+
+
 ---
 
 ## 1. Brief to the agent
@@ -357,10 +369,5 @@ exhaust browser memory. The architecture only works because the dataset is small
 
 ---
 
-## Screenshots
 
-### Output — quotes loaded from real API (2-column grid)
-![Output Screenshot](Output%20Screenshot.png)
 
-### Search — filtering by author name across all quotes
-![Search Screenshot](Search%20Screenshot.png)
