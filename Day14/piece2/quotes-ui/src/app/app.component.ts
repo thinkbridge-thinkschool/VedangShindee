@@ -17,7 +17,7 @@ export class AppComponent {
 
   selectedQuoteId = signal<number | null>(null);
   showForm        = signal(false);
-  useSignalForm   = signal(true);    // default: Signal Forms (toggle still available)
+  useSignalForm   = signal(false);   // default: Reactive Forms
 
   // Panel is open whenever a quote is selected OR the form is active
   isPanelOpen = computed(() => this.selectedQuoteId() !== null || this.showForm());

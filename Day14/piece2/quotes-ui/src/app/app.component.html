@@ -2,7 +2,23 @@
 
   <header class="app-hero">
     <h1 class="app-hero__title">Quotes Explorer</h1>
-    <button class="btn-add-quote" (click)="onAddQuote()">+ Add Quote</button>
+    <div class="header-actions">
+      <button class="btn-add-quote" (click)="onAddQuote()">+ Add Quote</button>
+      @if (showForm()) {
+        <div class="form-toggle-group" role="group" aria-label="Form API">
+          <button
+            class="form-toggle-btn"
+            [class.form-toggle-btn--active]="!useSignalForm()"
+            (click)="useSignalForm.set(false)"
+          >Reactive</button>
+          <button
+            class="form-toggle-btn"
+            [class.form-toggle-btn--active]="useSignalForm()"
+            (click)="useSignalForm.set(true)"
+          >Signal</button>
+        </div>
+      }
+    </div>
   </header>
 
   <div class="app-body">
