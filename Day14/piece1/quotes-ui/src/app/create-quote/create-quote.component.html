@@ -1,0 +1,127 @@
+<div class="cq-wrap">
+  <section class="cq-card" aria-labelledby="cq-heading">
+
+    <button
+      class="cq-close"
+      type="button"
+      aria-label="Close form"
+      title="Close"
+      (click)="onClose()"
+    >✕</button>
+
+    <header class="cq-header">
+      <h2 id="cq-heading" class="cq-heading">Add a Quote</h2>
+      <p class="cq-subtitle">Share a quote with the community</p>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="cq-form">
+
+      <!-- ── Author ──────────────────────────────────────────────── -->
+      <div class="cq-field">
+        <label class="cq-label" for="author">Author</label>
+        <input
+          #authorInput
+          class="cq-input"
+          [class.cq-input--error]="authorInvalid()"
+          id="author"
+          type="text"
+          formControlName="author"
+          placeholder="e.g. Marcus Aurelius"
+          autocomplete="off"
+          [attr.aria-invalid]="authorInvalid() ? 'true' : null"
+          aria-describedby="author-error"
+          (blur)="onAuthorBlur()"
+        />
+        <div class="cq-field-footer">
+          <span
+            id="author-error"
+            class="cq-error"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            @if (authorInvalid()) {
+              @if (authorCtrl.errors?.['required']) {
+                Author is required
+              } @else if (authorCtrl.errors?.['maxlength']) {
+                Author must be 200 characters or less
+              }
+            }
+          </span>
+          <span
+            class="cq-char-count"
+            [class.cq-char-count--warn]="authorLen() > 180"
+            aria-hidden="true"
+          >{{ authorLen() }} / 200</span>
+        </div>
+      </div>
+
+      <!-- ── Quote Text ───────────────────────────────────────────── -->
+      <div class="cq-field">
+        <label class="cq-label" for="text">Quote Text</label>
+        <textarea
+          #textInput
+          class="cq-textarea"
+          [class.cq-textarea--error]="textInvalid()"
+          id="text"
+          formControlName="text"
+          rows="5"
+          placeholder="Enter the quote…"
+          [attr.aria-invalid]="textInvalid() ? 'true' : null"
+          aria-describedby="text-error"
+          (blur)="onTextBlur()"
+        ></textarea>
+        <div class="cq-field-footer">
+          <span
+            id="text-error"
+            class="cq-error"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            @if (textInvalid()) {
+              @if (textCtrl.errors?.['required']) {
+                Quote text is required
+              } @else if (textCtrl.errors?.['maxlength']) {
+                Quote text must be 1000 characters or less
+              }
+            }
+          </span>
+          <span
+            class="cq-char-count"
+            [class.cq-char-count--warn]="textLen() > 900"
+            aria-hidden="true"
+          >{{ textLen() }} / 1000</span>
+        </div>
+      </div>
+
+      <!-- ── Server error ─────────────────────────────────────────── -->
+      @if (serverError()) {
+        <div class="cq-server-error" role="alert">
+          {{ serverError() }}
+        </div>
+      }
+
+      <!-- ── Success ──────────────────────────────────────────────── -->
+      @if (isSuccess()) {
+        <div class="cq-success" role="status">
+          Quote added successfully!
+        </div>
+      }
+
+      <!-- ── Submit ───────────────────────────────────────────────── -->
+      <button
+        class="cq-submit"
+        type="submit"
+        [disabled]="isSubmitting()"
+        [attr.aria-busy]="isSubmitting() ? 'true' : null"
+      >
+        @if (isSubmitting()) {
+          <span class="spinner" aria-hidden="true"></span>
+          Saving…
+        } @else {
+          Add Quote
+        }
+      </button>
+
+    </form>
+  </section>
+</div>

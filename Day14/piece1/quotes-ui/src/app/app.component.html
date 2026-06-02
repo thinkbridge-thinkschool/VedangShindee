@@ -1,0 +1,32 @@
+<div class="app-shell">
+
+  <header class="app-hero">
+    <h1 class="app-hero__title">Quotes Explorer</h1>
+    <button class="btn-add-quote" (click)="onAddQuote()">+ Add Quote</button>
+  </header>
+
+  <div class="app-body">
+
+    <!-- Main area: quotes grid — always fills the available space -->
+    <main class="main-grid">
+      <app-quotes-list
+        [selectedId]="selectedQuoteId()"
+        (quoteSelected)="onQuoteSelected($event)" />
+    </main>
+
+    <!-- Right drawer panel — slides in when a quote is selected or form is open -->
+    @if (isPanelOpen()) {
+      <aside class="panel-drawer">
+        @if (selectedQuoteId() !== null) {
+          <app-quote-detail [quoteId]="selectedQuoteId()" (closed)="onDetailClosed()" />
+        } @else {
+          <app-create-quote
+            (quoteCreated)="onQuoteCreated($event)"
+            (closed)="onFormClosed()" />
+        }
+      </aside>
+    }
+
+  </div>
+
+</div>
