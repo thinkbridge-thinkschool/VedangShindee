@@ -1,0 +1,121 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* ── Placeholder ────────────────────────────────────────────────── */
+.detail-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.5rem;
+  user-select: none;
+}
+.detail-placeholder__mark {
+  font-size: 5rem;
+  color: #1e293b;
+  line-height: 1;
+  font-family: Georgia, serif;
+  margin-bottom: 0.5rem;
+}
+.detail-placeholder__text { font-size: 0.9rem; color: #475569; font-weight: 500; }
+.detail-placeholder__hint { font-size: 0.75rem; color: #334155; }
+
+/* ── Loading ────────────────────────────────────────────────────── */
+.detail-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 3rem;
+  color: #475569;
+  font-size: 0.875rem;
+}
+
+/* ── Error ──────────────────────────────────────────────────────── */
+.detail-error-wrap { padding: 2rem; }
+
+/* ── Quote card ─────────────────────────────────────────────────── */
+.detail-card {
+  padding: 3rem 3.5rem 2.5rem;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  animation: fade-up 0.2s ease both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.detail-card__mark {
+  font-size: 4rem;
+  color: #6366f1;
+  opacity: 0.25;
+  line-height: 0.85;
+  font-family: Georgia, serif;
+  margin-bottom: 0.75rem;
+}
+
+.detail-card__text {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  color: #e2e8f0;
+  font-family: inherit;
+  border: none;
+  padding: 0;
+  margin-bottom: 2.5rem;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+.detail-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.detail-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-left: 1rem;
+  border-left: 3px solid #6366f1;
+}
+
+.detail-card__author { font-size: 1rem; font-weight: 600; font-style: normal; color: #818cf8; }
+.detail-card__date   { font-size: 0.75rem; color: #334155; letter-spacing: 0.02em; }
+
+/* ── Action buttons ─────────────────────────────────────────────── */
+.detail-card__actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.875rem;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 7px;
+  color: #64748b;
+  font-size: 0.78rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.action-btn:hover { background: #162032; border-color: #6366f1; color: #e2e8f0; }
+
+.star-action--on {
+  background: color-mix(in srgb, #e3b341 10%, transparent);
+  border-color: color-mix(in srgb, #e3b341 40%, transparent);
+  color: #e3b341;
+}
+.star-action--on:hover { border-color: #e3b341; color: #e3b341; }
+
+.copy-btn--done { background: color-mix(in srgb, #6366f1 12%, transparent); border-color: #6366f1; color: #818cf8; }

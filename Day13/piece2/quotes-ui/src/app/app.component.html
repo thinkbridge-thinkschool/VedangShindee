@@ -1,0 +1,19 @@
+<div class="app-shell">
+
+  <header class="app-hero">
+    <h1 class="app-hero__title">Quotes Explorer</h1>
+  </header>
+
+  <div class="app-body">
+    <aside class="panel panel--list">
+      <app-quotes-list
+        [selectedId]="selectedQuoteId()"
+        (quoteSelected)="onQuoteSelected($event)" />
+    </aside>
+
+    <section class="panel panel--detail">
+      <app-quote-detail [quoteId]="selectedQuoteId()" />
+    </section>
+  </div>
+
+</div>

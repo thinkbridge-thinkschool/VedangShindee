@@ -1,0 +1,114 @@
+<!-- ── Header ─────────────────────────────────────────────────── -->
+<div class="list-header">
+  <span class="list-header__title">Quotes</span>
+  <div class="list-header__actions">
+    @if (totalCount() > 0) {
+      <span class="list-header__badge">{{ totalCount() }}</span>
+    }
+    <button class="btn-icon" (click)="randomQuote()" title="Random quote">
+      <svg viewBox="0 0 16 16" fill="none" width="13" height="13">
+        <path d="M13 3h-3a2 2 0 0 0-1.6.8L7 5M13 3l-1.5 1.5M13 3l-1.5-1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13 13h-3a2 2 0 0 1-1.6-.8L4.6 7.8A2 2 0 0 0 3 7H2M13 13l-1.5 1.5M13 13l-1.5-1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 4h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- ── Filter tabs ────────────────────────────────────────────── -->
+<div class="filter-tabs">
+  <button class="filter-tab" [class.filter-tab--active]="activeTab() === 'all'" (click)="setTab('all')">All</button>
+  <button class="filter-tab" [class.filter-tab--active]="activeTab() === 'favorites'" (click)="setTab('favorites')">
+    ★ Starred
+    @if (favs.favorites().size > 0) {
+      <span class="filter-tab__count">{{ favs.favorites().size }}</span>
+    }
+  </button>
+</div>
+
+<!-- ── Search ─────────────────────────────────────────────────── -->
+<div class="search-bar">
+  <svg class="search-bar__icon" viewBox="0 0 16 16" fill="none" width="13" height="13">
+    <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+  <input class="search-bar__input" type="text" placeholder="Search author or text…"
+         [value]="searchTerm()" (input)="onSearch($event)" />
+  @if (searchTerm()) {
+    <button class="search-bar__clear" (click)="clearSearch()">✕</button>
+  }
+</div>
+
+<!-- ── States + list ─────────────────────────────────────────── -->
+@if (isListLoading() && quotes().length === 0) {
+  <div class="state-loading"><span class="spinner"></span>Loading quotes…</div>
+
+} @else if (listError() && quotes().length === 0) {
+  <div class="error-wrap">
+    <div class="state-error">
+      <p>{{ listError() }}</p>
+      <button class="btn-retry" (click)="retry()">Try again</button>
+    </div>
+  </div>
+
+} @else if (filteredQuotes().length === 0) {
+  <div class="list-empty">
+    @if (activeTab() === 'favorites') {
+      <div class="list-empty__icon">★</div>
+      <p>No starred quotes yet.</p>
+      <button class="list-empty__action" (click)="setTab('all')">Browse all</button>
+    } @else if (searchTerm()) {
+      <p>No results for "{{ searchTerm() }}"</p>
+      <button class="list-empty__action" (click)="clearSearch()">Clear search</button>
+    } @else {
+      <p>No quotes yet.</p>
+    }
+  </div>
+
+} @else {
+  <div class="list-scroll">
+
+    <ul class="quote-list">
+      @for (quote of displayedQuotes(); track quote.id) {
+        <li class="quote-item"
+            [class.quote-item--active]="selectedId() === quote.id"
+            (click)="selectQuote(quote.id)">
+          <div class="quote-item__body">
+            <span class="quote-item__author">{{ quote.author }}</span>
+            <span class="quote-item__preview">{{ truncate(quote.text) }}</span>
+          </div>
+          <button class="star-btn" [class.star-btn--on]="favs.has(quote.id)"
+                  (click)="$event.stopPropagation(); favs.toggle(quote.id)"
+                  [title]="favs.has(quote.id) ? 'Remove star' : 'Star'">
+            {{ favs.has(quote.id) ? '★' : '☆' }}
+          </button>
+        </li>
+      }
+    </ul>
+
+    <!-- ── Pagination: search (client-side) vs browse (server-side) ─ -->
+    @if (searchTerm()) {
+      <!-- Search mode: paginate filtered results client-side -->
+      @if (searchTotalPages() > 1) {
+        <div class="pagination">
+          <button class="pg-btn" [disabled]="currentSearchPage() === 1" (click)="prevSearchPage()">← Prev</button>
+          <span class="pg-label">{{ currentSearchPage() }} / {{ searchTotalPages() }}</span>
+          <button class="pg-btn" [disabled]="currentSearchPage() === searchTotalPages()" (click)="nextSearchPage()">Next →</button>
+        </div>
+      }
+    } @else {
+      <!-- Browse mode: server-side pagination -->
+      <div class="pagination">
+        @if (isListLoading()) {
+          <span class="spinner"></span>
+        } @else {
+          <button class="pg-btn" [disabled]="currentPage() === 1" (click)="prevPage()">← Prev</button>
+          <span class="pg-label">Page {{ currentPage() }}</span>
+          <button class="pg-btn" [disabled]="!hasMore()" (click)="nextPage()">Next →</button>
+        }
+      </div>
+    }
+
+    <div class="list-hint">↑ ↓ navigate</div>
+  </div>
+}

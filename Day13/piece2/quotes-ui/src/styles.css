@@ -1,0 +1,124 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #080818;
+  --surface:      #0f172a;
+  --surface-2:    #162032;
+  --border:       #1e293b;
+  --accent:       #6366f1;
+  --accent-dim:   #1e1b4b;
+  --text-primary: #e2e8f0;
+  --text-muted:   #64748b;
+  --error:        #f87171;
+  --error-bg:     #3d1212;
+  --radius:       8px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── App shell ──────────────────────────────────────────────────── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ── Gradient hero header ───────────────────────────────────────── */
+.app-hero {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #1e1b4b 100%);
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.app-hero__title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.04em;
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Panel layout ───────────────────────────────────────────────── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.panel--list {
+  width: 380px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+
+.panel--detail {
+  flex: 1;
+  background: var(--bg);
+}
+
+/* ── Shared: loading ────────────────────────────────────────────── */
+.state-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 1.5rem 1.125rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* ── Shared: error card ─────────────────────────────────────────── */
+.state-error {
+  padding: 1rem 1.125rem;
+  background: var(--error-bg);
+  border: 1px solid color-mix(in srgb, var(--error) 35%, transparent);
+  border-radius: var(--radius);
+  color: var(--error);
+  font-size: 0.85rem;
+}
+
+.state-error p { margin-bottom: 0.75rem; line-height: 1.5; }
+
+/* ── Shared: retry button ───────────────────────────────────────── */
+.btn-retry {
+  background: transparent;
+  border: 1px solid var(--error);
+  color: var(--error);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-retry:hover { background: var(--error); color: #fff; }
+
+/* ── Shared: spinner ────────────────────────────────────────────── */
+.spinner {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
