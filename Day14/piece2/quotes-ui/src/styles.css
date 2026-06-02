@@ -1,0 +1,395 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* ── Backgrounds ──────────────────────────────────────────────── */
+  --bg:           #05050f;
+  --surface:      #0b1120;
+  --surface-2:    #101a2e;
+  --border:       #182236;
+
+  /* ── Indigo/violet primary accent ─────────────────────────────── */
+  --accent:       #6366f1;
+  --accent-soft:  #818cf8;
+  --accent-dim:   #1e1b4b;
+  --accent-glow:  rgba(99, 102, 241, 0.25);
+
+  /* ── Multi-color palette for cards ───────────────────────────── */
+  --c-indigo:   #6366f1;
+  --c-violet:   #8b5cf6;
+  --c-cyan:     #22d3ee;
+  --c-emerald:  #10b981;
+  --c-amber:    #f59e0b;
+  --c-rose:     #f43f5e;
+
+  /* ── Typography ───────────────────────────────────────────────── */
+  --text-primary: #eaf0fb;
+  --text-muted:   #7a95b0;   /* ≥ 6.3:1 on all dark surfaces — was #4e6280 (3.5:1, failed AA) */
+
+  /* ── Feedback ─────────────────────────────────────────────────── */
+  --error:        #f87171;
+  --error-bg:     #280a0a;
+  --success:      #10b981;
+  --success-bg:   #071a12;
+
+  /* ── Shape ────────────────────────────────────────────────────── */
+  --radius:    10px;
+  --radius-lg: 14px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── App shell ──────────────────────────────────────────────────── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ── Vivid animated header ──────────────────────────────────────── */
+@keyframes hero-shift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+.app-hero {
+  background: linear-gradient(-45deg,
+    #0d0221, #1e1b4b, #2d1b69,
+    #1a2e80, #0d0c3a, #3b0764);
+  background-size: 400% 400%;
+  animation: hero-shift 16s ease infinite;
+  padding: 1rem 2rem 1.1rem;
+  text-align: center;
+  flex-shrink: 0;
+  position: relative;
+  box-shadow:
+    0 1px 0 rgba(139, 92, 246, 0.4),
+    0 4px 40px rgba(99, 102, 241, 0.3);
+}
+
+.app-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(99,102,241,0.6) 20%,
+    rgba(139,92,246,0.8) 50%,
+    rgba(236,72,153,0.6) 80%,
+    transparent
+  );
+}
+
+.app-hero__title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #e0e7ff 0%, #c4b5fd 40%, #a78bfa 70%, #f0abfc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.04em;
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ── Add Quote button — gradient with glow ──────────────────────── */
+.btn-add-quote {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+  background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15));
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  border-radius: 20px;
+  color: #c4b5fd;
+  font-size: 0.8rem;
+  font-family: inherit;
+  font-weight: 600;
+  padding: 0.38rem 1.1rem;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: background 0.22s, color 0.22s, border-color 0.22s,
+              box-shadow 0.22s, transform 0.15s;
+}
+.btn-add-quote:hover {
+  background: linear-gradient(135deg, rgba(99,102,241,0.38), rgba(139,92,246,0.3));
+  border-color: rgba(192, 132, 252, 0.7);
+  color: #e9d5ff;
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.35);
+  transform: translateY(-1px);
+}
+.btn-add-quote:active { transform: translateY(0); }
+
+/* ── Header action row (Add Quote + toggle side by side) ────────── */
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.7rem;
+}
+.header-actions .btn-add-quote { margin-top: 0; }
+
+/* ── Segmented toggle: [ REACTIVE ] [ SIGNAL ] ──────────────────── */
+.form-toggle-group {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(5, 5, 20, 0.75);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 4px 20px rgba(0,0,0,0.3);
+}
+
+.form-toggle-btn {
+  padding: 0.3rem 1.1rem;
+  border: none;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: transparent;
+  color: rgba(148, 163, 184, 0.5);
+  transition: color 0.2s ease, background 0.22s ease, box-shadow 0.22s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+.form-toggle-btn:hover:not(.form-toggle-btn--active) {
+  color: rgba(165, 180, 252, 0.85);
+  background: rgba(99, 102, 241, 0.1);
+}
+.form-toggle-btn--active {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #a855f7 100%);
+  color: #fff;
+  box-shadow:
+    0 0 16px rgba(124, 58, 237, 0.55),
+    0 2px 8px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(255,255,255,0.12) inset;
+}
+
+/* ── App body ───────────────────────────────────────────────────── */
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Main quotes grid area ──────────────────────────────────────── */
+.main-grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+  background: var(--bg);
+}
+
+/* ── Right drawer panel ─────────────────────────────────────────── */
+@keyframes drawer-slide-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.panel-drawer {
+  width: 460px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+  background: linear-gradient(180deg, #0d1526 0%, #0a1020 100%);
+  border-left: 1px solid rgba(99, 102, 241, 0.15);
+  animation: drawer-slide-in 0.28s cubic-bezier(0.4, 0, 0.2, 1) both;
+  box-shadow:
+    -8px 0 40px rgba(0, 0, 0, 0.5),
+    -1px 0 0 rgba(139, 92, 246, 0.1);
+}
+
+/* ── Idle / welcome state ───────────────────────────────────────── */
+.detail-idle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-idle__bg-mark {
+  position: absolute;
+  font-size: 32rem;
+  font-family: Georgia, serif;
+  color: rgba(99, 102, 241, 0.035);
+  line-height: 1;
+  top: -6rem;
+  right: -5rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.detail-idle::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(99,102,241,0.07) 0%,
+    rgba(139,92,246,0.04) 40%,
+    transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.detail-idle__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+  max-width: 480px;
+}
+
+.detail-idle__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(168,85,247,0.12));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 20px;
+  color: #c084fc;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-idle__heading {
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg,
+    #e0e7ff 0%, #a5b4fc 25%, #c084fc 55%, #f0abfc 80%, #fb7185 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.1rem;
+}
+
+.detail-idle__sub {
+  font-size: 0.875rem;
+  color: #7a95b0;
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+
+.detail-idle__actions { display: flex; justify-content: center; margin-bottom: 2rem; }
+
+.detail-idle__btn-primary {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #be185d 100%);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 700;
+  padding: 0.72rem 1.8rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4),
+              0 0 0 1px rgba(255,255,255,0.06) inset;
+  transition: transform 0.18s, box-shadow 0.18s;
+  letter-spacing: 0.02em;
+}
+.detail-idle__btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -80%; width: 55%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: skewX(-15deg);
+  transition: left 0.55s ease;
+}
+.detail-idle__btn-primary:hover::after { left: 140%; }
+.detail-idle__btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(124, 58, 237, 0.5),
+              0 0 0 1px rgba(255,255,255,0.06) inset;
+}
+.detail-idle__btn-primary:active { transform: translateY(0); }
+
+.detail-idle__hint {
+  font-size: 0.72rem;
+  color: rgba(78, 98, 128, 0.5);
+  letter-spacing: 0.03em;
+}
+
+/* ── Shared: loading ────────────────────────────────────────────── */
+.state-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 1.5rem 1.125rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* ── Shared: error card ─────────────────────────────────────────── */
+.state-error {
+  padding: 1rem 1.125rem;
+  background: var(--error-bg);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-left: 3px solid var(--error);
+  border-radius: var(--radius);
+  color: var(--error);
+  font-size: 0.85rem;
+}
+.state-error p { margin-bottom: 0.75rem; line-height: 1.5; }
+
+/* ── Shared: retry button ───────────────────────────────────────── */
+.btn-retry {
+  background: transparent;
+  border: 1px solid var(--error);
+  color: var(--error);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-retry:hover { background: var(--error); color: #fff; }
+
+/* ── Shared: spinner ────────────────────────────────────────────── */
+.spinner {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(139, 92, 246, 0.15);
+  border-top-color: var(--c-violet);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
