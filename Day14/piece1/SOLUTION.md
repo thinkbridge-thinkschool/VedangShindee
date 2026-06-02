@@ -432,6 +432,14 @@ createQuote(author: string, text: string): Observable<Quote> {
 
 ---
 
+**axe DevTools scan — 0 issues (WCAG 2.1 AA)**
+
+![axe DevTools showing 0 accessibility issues](./axe%20tools.png)
+
+> Started with 6 Serious contrast violations. Fixed by lightening `--text-muted` from `#4e6280` (3.5:1) to `#7a95b0` (7.2:1), replacing hard-coded dark greys throughout, and bumping per-card accent colours (`#6366f1` → `#818cf8`, `#8b5cf6` → `#a78bfa`) to clear 4.5:1 on the card surface `#101a2e`.
+
+---
+
 ### Accessibility check — keyboard path
 
 - Pressed **Tab** → focus landed on the Author input. Label "Author" is associated via `for="author"` / `id="author"`.

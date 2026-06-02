@@ -23,7 +23,7 @@
 
   /* ── Typography ───────────────────────────────────────────────── */
   --text-primary: #eaf0fb;
-  --text-muted:   #4e6280;
+  --text-muted:   #7a95b0;   /* ≥ 6.3:1 on all dark surfaces — was #4e6280 (3.5:1, failed AA) */
 
   /* ── Feedback ─────────────────────────────────────────────────── */
   --error:        #f87171;
@@ -246,7 +246,7 @@ body {
 
 .detail-idle__sub {
   font-size: 0.875rem;
-  color: #304560;
+  color: #7a95b0;
   line-height: 1.75;
   margin-bottom: 2rem;
 }

@@ -25,7 +25,7 @@
   font-family: Georgia, serif;
   margin-bottom: 0.5rem;
 }
-.detail-placeholder__text { font-size: 0.9rem; color: #2d3f5a; font-weight: 500; }
+.detail-placeholder__text { font-size: 0.9rem; color: #7a95b0; font-weight: 500; }
 .detail-placeholder__hint { font-size: 0.75rem; color: #1e2d40; }
 
 /* ── Loading ────────────────────────────────────────────────────── */
@@ -34,7 +34,7 @@
   align-items: center;
   gap: 0.625rem;
   padding: 3rem;
-  color: #475569;
+  color: #7a95b0;
   font-size: 0.875rem;
 }
 
@@ -139,7 +139,7 @@
   background-clip: text;
 }
 
-.detail-card__date { font-size: 0.72rem; color: #334155; letter-spacing: 0.03em; }
+.detail-card__date { font-size: 0.72rem; color: #6b8faa; letter-spacing: 0.03em; }
 
 /* ── Action buttons ─────────────────────────────────────────────── */
 .detail-card__actions { display: flex; gap: 0.5rem; flex-shrink: 0; }

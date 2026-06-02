@@ -190,12 +190,13 @@
 }
 
 /* ── Per-card color cycling (6 accent colors) ───────────────────── */
-.quote-item:nth-child(6n+1) { --c: #6366f1; --cg: rgba(99,102,241,0.18);  }
-.quote-item:nth-child(6n+2) { --c: #8b5cf6; --cg: rgba(139,92,246,0.18); }
-.quote-item:nth-child(6n+3) { --c: #22d3ee; --cg: rgba(34,211,238,0.18);  }
-.quote-item:nth-child(6n+4) { --c: #10b981; --cg: rgba(16,185,129,0.18);  }
-.quote-item:nth-child(6n+5) { --c: #f59e0b; --cg: rgba(245,158,11,0.18);  }
-.quote-item:nth-child(6n+6) { --c: #f43f5e; --cg: rgba(244,63,94,0.18);   }
+/* Colours chosen for ≥ 4.5:1 contrast on --surface-2 (#101a2e) */
+.quote-item:nth-child(6n+1) { --c: #818cf8; --cg: rgba(129,140,248,0.18); } /* indigo  — was #6366f1 (3.88:1 fail) */
+.quote-item:nth-child(6n+2) { --c: #a78bfa; --cg: rgba(167,139,250,0.18); } /* violet  — was #8b5cf6 (4.1:1 fail)  */
+.quote-item:nth-child(6n+3) { --c: #22d3ee; --cg: rgba(34,211,238,0.18);  } /* cyan    — 9.4:1 ✓                   */
+.quote-item:nth-child(6n+4) { --c: #10b981; --cg: rgba(16,185,129,0.18);  } /* emerald — 6.8:1 ✓                   */
+.quote-item:nth-child(6n+5) { --c: #f59e0b; --cg: rgba(245,158,11,0.18);  } /* amber   — 7.8:1 ✓                   */
+.quote-item:nth-child(6n+6) { --c: #fb7185; --cg: rgba(251,113,133,0.18); } /* rose    — 6.1:1 ✓                   */
 
 /* ── Quote item (grid card) ─────────────────────────────────────── */
 @keyframes item-in {
@@ -261,7 +262,7 @@
 
 .quote-item__preview {
   font-size: 0.83rem;
-  color: #4e6280;
+  color: #7a95b0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -380,8 +381,7 @@
 .list-hint {
   padding: 0.4rem 1rem;
   font-size: 0.6rem;
-  color: var(--text-muted);
-  opacity: 0.35;
+  color: #6b8faa;
   text-align: center;
   letter-spacing: 0.06em;
   flex-shrink: 0;

@@ -176,7 +176,7 @@
 .cq-input::placeholder,
 .cq-textarea::placeholder {
   color: var(--text-muted);
-  opacity: 0.45;
+  opacity: 0.75;
 }
 
 .cq-input:disabled,
