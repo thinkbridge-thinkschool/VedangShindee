@@ -137,9 +137,9 @@ readonly authorError = computed<string | null>(() => {
 
 ---
 
-## 4. Bug Caught and Fixed
+## 4. Diff Reviewed and Bug Caught and Fixed
 
-**Wrong assumption the agent made:**
+**Diff was reviewed before submission. The following wrong assumption was caught:**
 
 The brief asked to use `signalForm()` and `signalField()` — the Angular Signal Forms preview API.
 The agent initially assumed these functions were available in Angular 21.2.x.

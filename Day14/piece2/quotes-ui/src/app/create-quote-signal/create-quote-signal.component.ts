@@ -23,6 +23,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { timeout, TimeoutError } from 'rxjs';
 import { QuotesService } from '../quotes.service';
 import { Quote } from '../quote.model';
 
@@ -65,14 +66,14 @@ export class CreateQuoteSignalComponent {
   // Computed validation — returns the first failing rule name, or null when valid
   readonly authorError = computed<string | null>(() => {
     const v = this.authorValue();
-    if (v.length === 0) return 'required';
+    if (!v.trim()) return 'required';
     if (v.length > 200) return 'maxlength';
     return null;
   });
 
   readonly textError = computed<string | null>(() => {
     const v = this.textValue();
-    if (v.length === 0) return 'required';
+    if (!v.trim()) return 'required';
     if (v.length > 1000) return 'maxlength';
     return null;
   });
@@ -137,7 +138,8 @@ export class CreateQuoteSignalComponent {
     this.isSuccess.set(false);
 
     // Step 4 — call real POST /api/quotes endpoint { author, text }
-    this.quotesService.createQuote(this.authorValue(), this.textValue()).subscribe({
+    // timeout(10000) re-enables the form if the API hangs instead of responding
+    this.quotesService.createQuote(this.authorValue(), this.textValue()).pipe(timeout(10000)).subscribe({
       next: (quote: Quote) => {
         // Step 5 — success
         this.quoteCreated.emit(quote);
@@ -148,14 +150,14 @@ export class CreateQuoteSignalComponent {
         this.isSuccess.set(true);
         this.isSubmitting.set(false);
       },
-      error: (err: HttpErrorResponse) => {
-        // Step 6 — server error; re-enable form by clearing isSubmitting
-        const body = err.error as ApiError | null;
-        const message: string =
-          body?.title ??
-          body?.detail ??
-          err.message ??
-          'Failed to create quote. Please try again.';
+      error: (err: HttpErrorResponse | TimeoutError) => {
+        // Step 6 — server error or timeout; re-enable form by clearing isSubmitting
+        const message: string = err instanceof TimeoutError
+          ? 'Request timed out. Please try again.'
+          : (err as HttpErrorResponse).error?.title ??
+            (err as HttpErrorResponse).error?.detail ??
+            (err as HttpErrorResponse).message ??
+            'Failed to create quote. Please try again.';
         this.serverError.set(message);
         this.isSubmitting.set(false);
       },
