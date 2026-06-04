@@ -1,4 +1,6 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AppError, ProblemDetails } from '../models/app-error.model';
@@ -16,8 +18,18 @@ function isProblemDetails(body: unknown): body is ProblemDetails {
 }
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+  const router = inject(Router);
+
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
+      // Auto sign-out on expired/invalid token
+      if (error.status === 401) {
+        localStorage.removeItem('access_token');
+        router.navigate(['/login'], {
+          queryParams: { returnUrl: router.url },
+        });
+      }
+
       let friendlyMessage: string;
       let raw: ProblemDetails | undefined;
 

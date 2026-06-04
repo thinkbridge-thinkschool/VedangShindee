@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import { CreateQuoteComponent } from './create-quote/create-quote.component';
@@ -20,7 +20,10 @@ export class AppComponent {
   isLoggedIn = signal(!!localStorage.getItem('access_token'));
 
   constructor() {
-    // Re-check token on every navigation so the button appears right after login
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationStart), takeUntilDestroyed())
+      .subscribe(() => this.showForm.set(false));  // close panel on every navigation
+
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd), takeUntilDestroyed())
       .subscribe(() => this.isLoggedIn.set(!!localStorage.getItem('access_token')));

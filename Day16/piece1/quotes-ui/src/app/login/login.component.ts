@@ -34,11 +34,16 @@ import { HttpClient } from '@angular/common/http';
     </div>
   `,
   styles: [`
+    :host {
+      display: flex;
+      flex: 1;
+      height: 100%;
+    }
     .login-page {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
+      width: 100%;
       background: var(--bg);
     }
     .login-card {
