@@ -22,7 +22,12 @@ export class AppComponent {
   constructor() {
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd), takeUntilDestroyed())
-      .subscribe(() => this.isLoggedIn.set(!!localStorage.getItem('access_token')));
+      .subscribe(e => {
+        this.isLoggedIn.set(!!localStorage.getItem('access_token'));
+        if ((e as NavigationEnd).urlAfterRedirects.startsWith('/login')) {
+          this.showForm.set(false);
+        }
+      });
   }
 
   onAddQuote(): void { this.showForm.set(true); }
