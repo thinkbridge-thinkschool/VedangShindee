@@ -27,14 +27,19 @@ app.http('proxy', {
 
     context.log(`Proxying ${request.method} → ${targetUrl}`);
 
-    // Acquire Managed Identity token at runtime.
-    // No secret is stored anywhere — DefaultAzureCredential uses the SWA system-assigned MI.
-    const tokenResponse = await credential.getToken(`${BACKEND_CLIENT_ID}/.default`);
+    // Try to acquire a Managed Identity token.
+    // Falls back to no token if MI is unavailable (e.g. cold-start race, local dev).
+    // The backend enforces its own per-endpoint auth — this token is defence-in-depth.
+    let miToken;
+    try {
+      const tokenResponse = await credential.getToken(`${BACKEND_CLIENT_ID}/.default`);
+      miToken = tokenResponse.token;
+    } catch (err) {
+      context.log('MI token unavailable, forwarding without auth:', err.message);
+    }
 
-    const forwardHeaders = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${tokenResponse.token}`,
-    };
+    const forwardHeaders = { 'Content-Type': 'application/json' };
+    if (miToken) forwardHeaders['Authorization'] = `Bearer ${miToken}`;
 
     const body = ['GET', 'HEAD', 'DELETE'].includes(request.method.toUpperCase())
       ? undefined
