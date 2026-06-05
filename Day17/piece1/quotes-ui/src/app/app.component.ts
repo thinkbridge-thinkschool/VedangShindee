@@ -30,7 +30,13 @@ export class AppComponent {
       });
   }
 
-  onAddQuote(): void { this.showForm.set(true); }
+  onAddQuote(): void {
+    if (!this.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.showForm.set(true);
+  }
   onFormClosed(): void { this.showForm.set(false); }
 
   onQuoteCreated(quote: Quote): void {
