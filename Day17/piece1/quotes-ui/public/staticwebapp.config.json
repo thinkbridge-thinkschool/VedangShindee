@@ -4,7 +4,7 @@
     "rewrite": "/index.html",
     "exclude": [
       "/api/*",
-      "/*.{css,js,ico,png,jpg,svg,woff2,woff,ttf,map,json}"
+      "/*.{css,js,ico,png,jpg,svg,woff2,woff,ttf,map,json,txt,xml}"
     ]
   },
   "responseOverrides": {
@@ -49,6 +49,7 @@
     "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'"
   },
   "mimeTypes": {
-    ".json": "application/json"
+    ".json": "application/json",
+    ".txt": "text/plain"
   }
 }
