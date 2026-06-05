@@ -5,7 +5,8 @@ using Xunit;
 
 namespace Quotes.Tests.Integration;
 
-public sealed class AuthorReportEndpointsTests : IClassFixture<SqlServerFixture>, IDisposable
+[Collection(nameof(SharedSqlServer))]
+public sealed class AuthorReportEndpointsTests : IDisposable
 {
     private readonly QuotesWebAppFactory _factory;
     private readonly HttpClient _client;

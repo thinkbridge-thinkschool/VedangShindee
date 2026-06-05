@@ -13,7 +13,8 @@ namespace Quotes.Tests.Integration;
 /// so every test starts with a freshly seeded SQL Server database and a clean FakeClock.
 /// The SqlServerFixture (one per class) holds the Testcontainers container lifetime.
 /// </summary>
-public sealed class AuthEndpointsTests : IClassFixture<SqlServerFixture>, IDisposable
+[Collection(nameof(SharedSqlServer))]
+public sealed class AuthEndpointsTests : IDisposable
 {
     private readonly QuotesWebAppFactory _factory;
     private readonly HttpClient _client;

@@ -17,7 +17,8 @@ namespace Quotes.Tests.Integration;
 /// → fully isolated schema and data.  No shared state across tests.
 /// The SqlServerFixture (one per class) holds the Testcontainers container lifetime.
 /// </summary>
-public sealed class QuoteEndpointsTests : IClassFixture<SqlServerFixture>, IDisposable
+[Collection(nameof(SharedSqlServer))]
+public sealed class QuoteEndpointsTests : IDisposable
 {
     private readonly QuotesWebAppFactory _factory;
     private readonly HttpClient _client;
