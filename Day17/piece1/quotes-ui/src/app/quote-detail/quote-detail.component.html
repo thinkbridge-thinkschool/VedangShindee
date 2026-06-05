@@ -1,0 +1,79 @@
+@switch (true) {
+
+  @case (quoteId() === null) {
+    <div class="detail-placeholder">
+      <div class="detail-placeholder__mark">❝</div>
+      <p class="detail-placeholder__text">Select a quote to read it</p>
+      <p class="detail-placeholder__hint">use ↑ ↓ or click the list</p>
+    </div>
+  }
+
+  @case (isDetailLoading()) {
+    <div class="detail-loading">
+      <span class="spinner"></span>
+      <span>Loading…</span>
+    </div>
+  }
+
+  @case (detailError() !== null) {
+    <div class="detail-error-wrap">
+      <div class="state-error">
+        <p>{{ detailError() }}</p>
+        <button class="btn-retry" (click)="retry()">Try again</button>
+      </div>
+    </div>
+  }
+
+  @default {
+    @if (selectedQuote(); as quote) {
+      <article class="detail-card">
+
+        <button class="detail-card__back" type="button" aria-label="Back to quotes" (click)="onClose()">← Back</button>
+
+        <div class="detail-card__mark">❝</div>
+
+        <blockquote class="detail-card__text">{{ quote.text }}</blockquote>
+
+        <footer class="detail-card__footer">
+          <div class="detail-card__meta">
+            <cite class="detail-card__author">{{ quote.author }}</cite>
+          </div>
+
+          <div class="detail-card__actions">
+            <!-- Star / favourite -->
+            <button
+              class="action-btn star-action"
+              [class.star-action--on]="favs.has(quote.id)"
+              (click)="favs.toggle(quote.id)"
+              [title]="favs.has(quote.id) ? 'Remove star' : 'Star this quote'">
+              {{ favs.has(quote.id) ? '★' : '☆' }}
+              {{ favs.has(quote.id) ? 'Starred' : 'Star' }}
+            </button>
+
+            <!-- Copy -->
+            <button
+              class="action-btn copy-btn"
+              [class.copy-btn--done]="copied()"
+              (click)="copyQuote(quote.text, quote.author)"
+              [title]="copied() ? 'Copied!' : 'Copy to clipboard'">
+              @if (copied()) {
+                <svg viewBox="0 0 16 16" fill="none" width="13" height="13">
+                  <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Copied!
+              } @else {
+                <svg viewBox="0 0 16 16" fill="none" width="13" height="13">
+                  <rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M11 5V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                Copy
+              }
+            </button>
+          </div>
+        </footer>
+
+      </article>
+    }
+  }
+
+}

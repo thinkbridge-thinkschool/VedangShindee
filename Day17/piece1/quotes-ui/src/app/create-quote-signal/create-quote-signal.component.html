@@ -1,0 +1,132 @@
+<div class="cq-wrap">
+  <section class="cq-card" aria-labelledby="cq-heading">
+
+    <button
+      class="cq-close"
+      type="button"
+      aria-label="Close form"
+      title="Close"
+      (click)="onClose()"
+    >✕</button>
+
+    <header class="cq-header">
+      <h2 id="cq-heading" class="cq-heading">Add a Quote</h2>
+      <p class="cq-subtitle">Share a quote with the community</p>
+    </header>
+
+    <!-- No [formGroup] / formControlName — native (submit) event + signal bindings -->
+    <form (submit)="onSubmit($event)" novalidate class="cq-form">
+
+      <!-- ── Author ──────────────────────────────────────────────── -->
+      <div class="cq-field">
+        <label class="cq-label" for="sf-author">Author</label>
+        <input
+          #authorInput
+          class="cq-input"
+          [class.cq-input--error]="authorInvalid()"
+          id="sf-author"
+          type="text"
+          [value]="authorValue()"
+          (input)="onAuthorInput($event)"
+          (blur)="onAuthorBlur()"
+          placeholder="e.g. Marcus Aurelius"
+          autocomplete="off"
+          [attr.aria-invalid]="authorInvalid() ? 'true' : null"
+          aria-describedby="sf-author-error"
+          [disabled]="isSubmitting()"
+        />
+        <div class="cq-field-footer">
+          <span
+            id="sf-author-error"
+            class="cq-error"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            @if (authorInvalid()) {
+              @if (authorError() === 'required') {
+                Author is required
+              } @else if (authorError() === 'maxlength') {
+                Author must be 200 characters or less
+              }
+            }
+          </span>
+          <span
+            class="cq-char-count"
+            [class.cq-char-count--warn]="authorLen() > 180"
+            aria-hidden="true"
+          >{{ authorLen() }} / 200</span>
+        </div>
+      </div>
+
+      <!-- ── Quote Text ───────────────────────────────────────────── -->
+      <div class="cq-field">
+        <label class="cq-label" for="sf-text">Quote Text</label>
+        <textarea
+          #textInput
+          class="cq-textarea"
+          [class.cq-textarea--error]="textInvalid()"
+          id="sf-text"
+          rows="5"
+          [value]="textValue()"
+          (input)="onTextInput($event)"
+          (blur)="onTextBlur()"
+          placeholder="Enter the quote…"
+          [attr.aria-invalid]="textInvalid() ? 'true' : null"
+          aria-describedby="sf-text-error"
+          [disabled]="isSubmitting()"
+        ></textarea>
+        <div class="cq-field-footer">
+          <span
+            id="sf-text-error"
+            class="cq-error"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            @if (textInvalid()) {
+              @if (textError() === 'required') {
+                Quote text is required
+              } @else if (textError() === 'maxlength') {
+                Quote text must be 1000 characters or less
+              }
+            }
+          </span>
+          <span
+            class="cq-char-count"
+            [class.cq-char-count--warn]="textLen() > 900"
+            aria-hidden="true"
+          >{{ textLen() }} / 1000</span>
+        </div>
+      </div>
+
+      <!-- ── Server error ─────────────────────────────────────────── -->
+      @if (serverError()) {
+        <div class="cq-server-error" role="alert">
+          {{ serverError() }}
+        </div>
+      }
+
+      <!-- ── Success ──────────────────────────────────────────────── -->
+      @if (isSuccess()) {
+        <div class="cq-success" role="status">
+          Quote added successfully!
+        </div>
+      }
+
+      <!-- ── Submit ───────────────────────────────────────────────── -->
+      <button
+        class="cq-submit"
+        type="submit"
+        [disabled]="isSubmitting()"
+        [attr.aria-busy]="isSubmitting() ? 'true' : null"
+      >
+        @if (isSubmitting()) {
+          <span class="spinner" aria-hidden="true"></span>
+          Saving…
+        } @else {
+          Add Quote
+        }
+      </button>
+
+    </form>
+  </section>
+</div>
