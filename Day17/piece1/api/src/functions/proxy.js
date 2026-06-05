@@ -38,8 +38,15 @@ app.http('proxy', {
       context.log('MI token unavailable, forwarding without auth:', err.message);
     }
 
+    // Prefer forwarding the user's own JWT (set by the Angular authInterceptor).
+    // Fall back to the MI token for server-to-server calls without a user context.
+    const incomingAuth = request.headers.get('authorization');
     const forwardHeaders = { 'Content-Type': 'application/json' };
-    if (miToken) forwardHeaders['Authorization'] = `Bearer ${miToken}`;
+    if (incomingAuth) {
+      forwardHeaders['Authorization'] = incomingAuth;
+    } else if (miToken) {
+      forwardHeaders['Authorization'] = `Bearer ${miToken}`;
+    }
 
     const body = ['GET', 'HEAD', 'DELETE'].includes(request.method.toUpperCase())
       ? undefined
