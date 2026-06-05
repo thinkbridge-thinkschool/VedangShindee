@@ -38,9 +38,12 @@ app.http('proxy', {
       context.log('MI token unavailable, forwarding without auth:', err.message);
     }
 
-    // Prefer forwarding the user's own JWT (set by the Angular authInterceptor).
-    // Fall back to the MI token for server-to-server calls without a user context.
-    const incomingAuth = request.headers.get('authorization');
+    // SWA strips the Authorization header before it reaches this function.
+    // Angular sends the JWT in X-User-Token as a workaround; fall back to
+    // Authorization for local/direct calls that bypass SWA.
+    const incomingAuth =
+      request.headers.get('x-user-token') ||
+      request.headers.get('authorization');
     const forwardHeaders = { 'Content-Type': 'application/json' };
     if (incomingAuth) {
       forwardHeaders['Authorization'] = incomingAuth;

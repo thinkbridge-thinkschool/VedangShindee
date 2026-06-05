@@ -48,18 +48,18 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
               { refresh_token: refreshToken }
             )
             .pipe(
+              catchError(() => throwError(() => toAppError(error))),
               switchMap(tokens => {
                 localStorage.setItem('access_token', tokens.access_token);
                 localStorage.setItem('refresh_token', tokens.refresh_token);
                 return next(
-                  req.clone({ setHeaders: { Authorization: `Bearer ${tokens.access_token}` } })
+                  req.clone({
+                    setHeaders: {
+                      Authorization: `Bearer ${tokens.access_token}`,
+                      'X-User-Token': `Bearer ${tokens.access_token}`,
+                    },
+                  })
                 );
-              }),
-              catchError(() => {
-                // Refresh failed — clear stale tokens and surface 401 to the UI.
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('refresh_token');
-                return throwError(() => toAppError(error));
               })
             );
         }
