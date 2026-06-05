@@ -84,4 +84,70 @@ public class QuoteValidatorTests
         // Assert
         errors.Should().BeEmpty();
     }
+
+    // ── Branch: author too long ───────────────────────────────────────────────
+
+    [Fact]
+    public void Validate_AuthorExceedsMaxLength_ReturnsAuthorLengthError()
+    {
+        var validator = new QuoteValidator();
+        var request = new CreateQuoteRequest
+        {
+            Author = new string('A', 201),
+            Text = "Valid text."
+        };
+
+        var errors = validator.Validate(request);
+
+        errors.Should().ContainKey("author");
+        errors["author"].Should().Contain("Author must be 200 characters or less");
+    }
+
+    [Fact]
+    public void Validate_AuthorAtExactMaxLength_ReturnsNoError()
+    {
+        var validator = new QuoteValidator();
+        var request = new CreateQuoteRequest
+        {
+            Author = new string('A', 200),
+            Text = "Valid text."
+        };
+
+        var errors = validator.Validate(request);
+
+        errors.Should().NotContainKey("author");
+    }
+
+    // ── Branch: text too long ─────────────────────────────────────────────────
+
+    [Fact]
+    public void Validate_TextExceedsMaxLength_ReturnsTextLengthError()
+    {
+        var validator = new QuoteValidator();
+        var request = new CreateQuoteRequest
+        {
+            Author = "Seneca",
+            Text = new string('x', 1001)
+        };
+
+        var errors = validator.Validate(request);
+
+        errors.Should().ContainKey("text");
+        errors["text"].Should().Contain("Quote text must be 1000 characters or less");
+    }
+
+    [Fact]
+    public void Validate_TextAtExactMaxLength_ReturnsNoError()
+    {
+        var validator = new QuoteValidator();
+        var request = new CreateQuoteRequest
+        {
+            Author = "Seneca",
+            Text = new string('x', 1000)
+        };
+
+        var errors = validator.Validate(request);
+
+        errors.Should().NotContainKey("text");
+    }
 }

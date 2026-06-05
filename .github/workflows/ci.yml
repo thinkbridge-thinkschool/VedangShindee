@@ -1,4 +1,4 @@
-name: CI – Day 4 Piece 1 (Quotes API)
+name: CI – Day 17 Piece 1 (Quotes API)
 
 on:
   push:
@@ -46,19 +46,19 @@ jobs:
 
       - name: Restore
         run: |
-          dotnet restore Day4/piece1/Quotes.Tests.Unit/Quotes.Tests.Unit.csproj
-          dotnet restore Day4/piece1/QuotesApi.Tests/QuotesApi.Tests.csproj
-          dotnet restore Day4/piece1/Quotes.Tests.Integration/Quotes.Tests.Integration.csproj
+          dotnet restore Day17/piece1/Quotes.Tests.Unit/Quotes.Tests.Unit.csproj
+          dotnet restore Day17/piece1/QuotesApi.Tests/QuotesApi.Tests.csproj
+          dotnet restore Day17/piece1/Quotes.Tests.Integration/Quotes.Tests.Integration.csproj
 
       - name: Build
         run: |
-          dotnet build Day4/piece1/Quotes.Tests.Unit/Quotes.Tests.Unit.csproj --no-restore
-          dotnet build Day4/piece1/QuotesApi.Tests/QuotesApi.Tests.csproj --no-restore
-          dotnet build Day4/piece1/Quotes.Tests.Integration/Quotes.Tests.Integration.csproj --no-restore
+          dotnet build Day17/piece1/Quotes.Tests.Unit/Quotes.Tests.Unit.csproj --no-restore
+          dotnet build Day17/piece1/QuotesApi.Tests/QuotesApi.Tests.csproj --no-restore
+          dotnet build Day17/piece1/Quotes.Tests.Integration/Quotes.Tests.Integration.csproj --no-restore
 
       - name: Test – unit
         run: |
-          dotnet test Day4/piece1/Quotes.Tests.Unit \
+          dotnet test Day17/piece1/Quotes.Tests.Unit \
             --no-build \
             --logger "trx;LogFileName=test-results.trx" \
             --collect:"XPlat Code Coverage" \
@@ -67,7 +67,7 @@ jobs:
 
       - name: Test – legacy integration (InMemory/SQLite)
         run: |
-          dotnet test Day4/piece1/QuotesApi.Tests \
+          dotnet test Day17/piece1/QuotesApi.Tests \
             --no-build \
             --logger "trx;LogFileName=test-results.trx" \
             --collect:"XPlat Code Coverage" \
@@ -76,7 +76,7 @@ jobs:
 
       - name: Test – integration (Testcontainers + SQL Server)
         run: |
-          dotnet test Day4/piece1/Quotes.Tests.Integration \
+          dotnet test Day17/piece1/Quotes.Tests.Integration \
             --no-build \
             --logger "trx;LogFileName=test-results.trx" \
             --collect:"XPlat Code Coverage" \
@@ -115,8 +115,8 @@ jobs:
           root = ET.parse('CoverageReport/Cobertura.xml').getroot()
           rate = float(root.get('line-rate', 0)) * 100
           print(f"Line coverage: {rate:.1f}%")
-          if rate < 40:
-              print(f"::error::Coverage {rate:.1f}% is below the 40% threshold")
+          if rate < 70:
+              print(f"::error::Coverage {rate:.1f}% is below the 70% threshold")
               sys.exit(1)
           print(f"Coverage {rate:.1f}% meets the threshold")
           EOF
