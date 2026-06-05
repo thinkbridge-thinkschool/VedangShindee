@@ -47,13 +47,11 @@ jobs:
       - name: Restore
         run: |
           dotnet restore Day17/piece1/Quotes.Tests.Unit/Quotes.Tests.Unit.csproj
-          dotnet restore Day17/piece1/QuotesApi.Tests/QuotesApi.Tests.csproj
           dotnet restore Day17/piece1/Quotes.Tests.Integration/Quotes.Tests.Integration.csproj
 
       - name: Build
         run: |
           dotnet build Day17/piece1/Quotes.Tests.Unit/Quotes.Tests.Unit.csproj --no-restore
-          dotnet build Day17/piece1/QuotesApi.Tests/QuotesApi.Tests.csproj --no-restore
           dotnet build Day17/piece1/Quotes.Tests.Integration/Quotes.Tests.Integration.csproj --no-restore
 
       - name: Test – unit
@@ -63,15 +61,6 @@ jobs:
             --logger "trx;LogFileName=test-results.trx" \
             --collect:"XPlat Code Coverage" \
             --results-directory TestResults/unit \
-            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[*]*.Migrations.*,[*]Program"
-
-      - name: Test – legacy integration (InMemory/SQLite)
-        run: |
-          dotnet test Day17/piece1/QuotesApi.Tests \
-            --no-build \
-            --logger "trx;LogFileName=test-results.trx" \
-            --collect:"XPlat Code Coverage" \
-            --results-directory TestResults/legacy \
             -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[*]*.Migrations.*,[*]Program"
 
       - name: Test – integration (Testcontainers + SQL Server)
