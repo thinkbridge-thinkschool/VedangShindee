@@ -26,6 +26,8 @@ export class QuotesListComponent {
   readonly listError     = this.store.error;
   readonly currentPage   = this.store.currentPage;
 
+  readonly skeletons = Array(6);
+
   // Local signals not managed by the store
   selectedId = signal<number | null>(null);
   allQuotes  = signal<Quote[]>([]);   // full dataset for client-side search

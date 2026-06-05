@@ -41,7 +41,18 @@
 
 <!-- ── States + list ─────────────────────────────────────────── -->
 @if (isListLoading() && quotes().length === 0) {
-  <div class="state-loading"><span class="spinner"></span>Loading quotes…</div>
+  <div class="list-scroll">
+    <ul class="quote-list">
+      @for (_ of skeletons; track $index) {
+        <li class="quote-skeleton">
+          <div class="skeleton-line skeleton-line--author"></div>
+          <div class="skeleton-line skeleton-line--text1"></div>
+          <div class="skeleton-line skeleton-line--text2"></div>
+          <div class="skeleton-line skeleton-line--text3"></div>
+        </li>
+      }
+    </ul>
+  </div>
 
 } @else if (listError() && quotes().length === 0) {
   <div class="error-wrap">
