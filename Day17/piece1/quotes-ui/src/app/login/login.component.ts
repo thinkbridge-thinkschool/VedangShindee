@@ -30,6 +30,11 @@ import { HttpClient } from '@angular/common/http';
           </button>
         </form>
         <a class="login-guest" routerLink="/quotes">Browse quotes without signing in →</a>
+        <div class="demo-hint">
+          <span class="demo-hint__label">Demo credentials</span>
+          <span class="demo-hint__row">test&#64;example.com</span>
+          <span class="demo-hint__row">password123</span>
+        </div>
       </div>
     </div>
   `,
@@ -133,6 +138,28 @@ import { HttpClient } from '@angular/common/http';
       transition: color 0.18s;
     }
     .login-guest:hover { color: var(--accent-soft); }
+    .demo-hint {
+      margin-top: 1rem;
+      padding: 0.65rem 1rem;
+      background: rgba(99,102,241,0.08);
+      border: 1px dashed rgba(99,102,241,0.25);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .demo-hint__label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.2rem;
+    }
+    .demo-hint__row {
+      font-size: 0.82rem;
+      color: var(--accent-soft);
+      font-family: monospace;
+    }
   `]
 })
 export class LoginComponent {
