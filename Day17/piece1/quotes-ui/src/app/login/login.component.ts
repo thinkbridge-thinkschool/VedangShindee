@@ -167,10 +167,11 @@ export class LoginComponent {
     this.loginError.set(null);
     this.isLoading.set(true);
 
-    this.http.post<{ access_token: string }>('/api/auth/login', { email, password })
+    this.http.post<{ access_token: string; refresh_token: string; expires_in: number }>('/api/auth/login', { email, password })
       .subscribe({
         next: (res) => {
           localStorage.setItem('access_token', res.access_token);
+          localStorage.setItem('refresh_token', res.refresh_token);
           this.isLoading.set(false);
           const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/quotes';
           this.router.navigateByUrl(returnUrl);

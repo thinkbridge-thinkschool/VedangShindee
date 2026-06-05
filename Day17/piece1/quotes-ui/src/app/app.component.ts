@@ -34,6 +34,7 @@ export class AppComponent {
 
   signOut(): void {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     this.isLoggedIn.set(false);
     this.router.navigate(['/login']);
   }
