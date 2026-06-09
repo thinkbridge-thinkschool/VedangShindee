@@ -63,3 +63,9 @@ Use Hangfire when jobs must survive process restarts, run on a cron schedule, or
 
 ### Unit tests run
 ![Unit tests run](unit-tests-run.png)
+
+### Scalar — POST /api/quotes responded 201 in 198ms (proves request returned fast, audit logged off-thread)
+![Scalar POST 201 timing](scalar-post-201-timing.png)
+
+### Terminal — [Audit] line appears after HTTP POST 201 (proves worker fired off the request thread)
+![Terminal audit line and POST 201](terminal-audit-line-post-201.png)
