@@ -1,0 +1,12 @@
+# .NET build output
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Test results
+TestResults/
+
+# Node
+node_modules/
