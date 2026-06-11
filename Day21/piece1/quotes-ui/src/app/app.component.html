@@ -1,0 +1,31 @@
+<div class="app-shell">
+
+  <header class="app-hero">
+    <h1 class="app-hero__title">Quotes Explorer</h1>
+    <div class="header-actions">
+      <button class="btn-add-quote" (click)="onAddQuote()">+ Add Quote</button>
+      @if (isLoggedIn()) {
+        <button class="btn-sign-out" (click)="signOut()">Sign Out</button>
+      }
+    </div>
+  </header>
+
+  <div class="app-body">
+
+    <!-- Main area: routed content fills the available space -->
+    <main class="main-grid">
+      <router-outlet />
+    </main>
+
+    <!-- Right drawer panel — slides in when create form is open -->
+    @if (showForm()) {
+      <aside class="panel-drawer">
+        <app-create-quote-signal
+          (quoteCreated)="onQuoteCreated($event)"
+          (closed)="onFormClosed()" />
+      </aside>
+    }
+
+  </div>
+
+</div>
